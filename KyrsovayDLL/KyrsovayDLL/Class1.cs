@@ -121,27 +121,34 @@ namespace KyrsovayDLL
         public static void Avtoriz(Form A, Form B, TextBox t, TextBox t2)
         {
 
-            string Log = t.Text;
-            string Pass = t2.Text;
-            var p = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0; Data Source = Users.mdb");
-            p.Open();
-            OleDbCommand command = new OleDbCommand("SELECT [login], [password] FROM [AUTHORIZATION]", p);
-            OleDbDataReader reader = command.ExecuteReader();
-            Boolean f = true;
-            while (reader.Read() & (f))
+           if (File.Exists("Users.mdb"))
             {
-                if ((Log == reader[0].ToString()) & (Pass == reader[1].ToString()))
+                string Log = t.Text;
+                string Pass = t2.Text;
+                var p = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0; Data Source = Users.mdb");
+                p.Open();
+                OleDbCommand command = new OleDbCommand("SELECT [login], [password] FROM [AUTHORIZATION]", p);
+                OleDbDataReader reader = command.ExecuteReader();
+                Boolean f = true;
+                while (reader.Read() & (f))
                 {
-                    MessageBox.Show("Сейчас вы будете перенаправлены на тестирование, удачи!", "Авторизация пройдена!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    f = false;
-                    A.Hide();
-                    B.Show();
+                    if ((Log == reader[0].ToString()) && (Pass == reader[1].ToString()))
+                    {
+                        MessageBox.Show("Сейчас вы будете перенаправлены на тестирование, удачи!", "Авторизация пройдена!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        f = false;
+                        A.Hide();
+                        B.Show();
+                    }
+                }
+                reader.Close();
+                if (f)
+                {
+                    MessageBox.Show("Введены неверные логин или пароль. Проверьте корректность введённых данных.", "Авторизация не пройдена!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            reader.Close();
-            if (f)
+            else
             {
-                MessageBox.Show("Введены неверные логин или пароль. Проверьте корректность введённых данных.", "Авторизация не пройдена!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Вас не существует в базе данных! Пожалуйста пройдите регистрацию.", "Авторизация не пройдена!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -170,13 +177,40 @@ namespace KyrsovayDLL
 
         public static void Register(TextBox t, TextBox t2)
         {
-            var p = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0; Data Source= Users.mdb");
-            p.Open();
-            OleDbCommand cmd = new OleDbCommand("INSERT INTO [AUTHORIZATION] ([login], [password]) VALUES (@Login, @Password)", p);
-            cmd.Parameters.AddWithValue("login", t.Text);
-            cmd.Parameters.AddWithValue("password", t2.Text);
-            cmd.ExecuteNonQueryAsync();
-            MessageBox.Show("Данные добавлены!", "Регистрация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var k = new ADOX.Catalog();
+            
+            if (File.Exists("Users.mdb"))
+            {
+                var p = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0; Data Source= Users.mdb");
+                p.Open();
+                OleDbCommand cmd = new OleDbCommand("INSERT INTO [AUTHORIZATION] ([login], [password]) VALUES (@Login, @Password)", p);
+                cmd.Parameters.AddWithValue("login", t.Text);
+                cmd.Parameters.AddWithValue("password", t2.Text);
+                cmd.ExecuteNonQueryAsync();
+                MessageBox.Show("Данные добавлены!", "Регистрация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                k.Create("Provider=Microsoft.Jet.OLEDB.4.0; Data Source= Users.mdb");
+                MessageBox.Show("БД успешно создана", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var p = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0; Data Source = Users.mdb");
+                p.Open();
+                var c = new OleDbCommand("CREATE TABLE [AUTHORIZATION] ([login] varchar(3), [password] varchar(3))", p);
+                try
+                {
+                    c.ExecuteNonQuery();
+                    MessageBox.Show("Структура БД записана", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (System.Runtime.InteropServices.COMException sit)
+                {
+                    MessageBox.Show(sit.Message);
+                }
+                OleDbCommand cmd = new OleDbCommand("INSERT INTO [AUTHORIZATION] ([login], [password]) VALUES (@Login, @Password)", p);
+                cmd.Parameters.AddWithValue("login", t.Text);
+                cmd.Parameters.AddWithValue("password", t2.Text);
+                cmd.ExecuteNonQueryAsync();
+                MessageBox.Show("Данные добавлены!", "Регистрация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         public static void deleteStroky(int k, ref int[,] mas)
