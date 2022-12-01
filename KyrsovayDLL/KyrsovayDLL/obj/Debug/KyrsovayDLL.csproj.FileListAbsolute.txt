@@ -1,0 +1,13 @@
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\bin\Debug\KyrsovayDLL.dll
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\bin\Debug\KyrsovayDLL.pdb
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\KyrsovayDLL.csproj.AssemblyReference.cache
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\Interop.ADOX.dll
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\Interop.MSDAOSP.dll
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\KyrsovayDLL.csproj.ResolveComReference.cache
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\KyrsovayDLL.csproj.CoreCompileInputs.cache
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\KyrsovayDLL.dll
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\KyrsovayDLL.pdb
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\bin\Debug\itextsharp.dll
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\bin\Debug\itextsharp.xml
+C:\Users\Nikita\source\repos\KyrsovayDLL\KyrsovayDLL\obj\Debug\KyrsovayDLL.csproj.CopyComplete
